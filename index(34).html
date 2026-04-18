@@ -1,0 +1,414 @@
+
+
+<!DOCTYPE html>
+<html lang="az">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>nerd_home</title>
+
+<style>
+*{
+    box-sizing:border-box;
+    margin:0;
+    padding:0;
+    font-family:Arial,sans-serif;
+}
+
+/* BODY */
+body{
+    overflow-x:hidden;
+}
+
+/* BACKGROUND */
+body::before{
+    content:"";
+    position:fixed;
+    inset:0;
+    background:url("img/WhatsApp Image 2026-04-12 at 19.58.20.jpeg") center/cover no-repeat;
+    z-index:-2;
+}
+
+body::after{
+    content:"";
+    position:fixed;
+    inset:0;
+    background:rgba(0,0,0,0.35);
+    z-index:-1;
+}
+
+/* HEADER */
+.header{
+    height:150px;
+    position:relative;
+    border-bottom-left-radius:60% 35px;
+    border-bottom-right-radius:70% 35px;
+    overflow:hidden;
+}
+
+/* HEADER IMAGE */
+.header-image{
+    position:absolute;
+    inset:0;
+    width:100%;
+    height:100%;
+    z-index:1;
+}
+
+.header-image img{
+    width:100%;
+    height:100%;
+    object-fit:cover;
+}
+
+/* MOVING LIGHT */
+.header::before{
+    content:"";
+    position:absolute;
+    top:0;
+    left:-60%;
+    width:60%;
+    height:100%;
+    background:linear-gradient(
+        120deg,
+        transparent,
+        rgba(255,255,255,0.4),
+        rgba(255,215,0,0.9),
+        rgba(255,255,255,0.4),
+        transparent
+    );
+    filter:blur(6px);
+    transform:skewX(-20deg);
+    animation:scan 2.8s infinite;
+    z-index:2;
+}
+
+@keyframes scan{
+    0%{left:-60%;}
+    50%{left:110%;}
+    100%{left:-60%;}
+}
+
+/* SEARCH */
+.search{
+    margin:15px;
+    text-align:center;
+}
+
+.search input{
+    width:90%;
+    padding:12px;
+    border-radius:10px;
+    border:1px solid #ccc;
+}
+
+/* PRODUCTS */
+.products{
+    padding:10px;
+    display:flex;
+    flex-direction:column;
+    gap:15px;
+}
+
+.product{
+    background:#fff;
+    padding:10px;
+    border-radius:12px;
+    display:flex;
+    gap:10px;
+    align-items:center;
+}
+
+.product img{
+    width:80px;
+    height:80px;
+    object-fit:cover;
+    border-radius:10px;
+    cursor:pointer;
+}
+
+.price{
+    font-weight:bold;
+}
+
+/* ABOUT */
+.about{
+    font-size:12px;
+    color:#555;
+    margin-top:4px;
+}
+
+/* QTY */
+.qty{
+    display:flex;
+    align-items:center;
+    gap:5px;
+    margin-top:5px;
+}
+
+.qty button{
+    width:25px;
+    height:25px;
+    border:none;
+    background:#ffd000;
+    border-radius:5px;
+}
+
+/* ADD */
+.add{
+    margin-top:5px;
+    padding:6px 10px;
+    background:#ffd000;
+    border:none;
+    border-radius:8px;
+    cursor:pointer;
+}
+
+/* CART */
+.cart{
+    position:fixed;
+    bottom:20px;
+    right:20px;
+    width:65px;
+    height:65px;
+    background:#ffd000;
+    border-radius:50%;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    font-size:24px;
+    cursor:pointer;
+}
+
+#count{
+    position:absolute;
+    top:5px;
+    right:10px;
+    background:red;
+    color:#fff;
+    font-size:12px;
+    padding:2px 6px;
+    border-radius:50%;
+}
+
+/* MODAL */
+.modal{
+    position:fixed;
+    inset:0;
+    background:rgba(0,0,0,0.6);
+    display:none;
+    align-items:center;
+    justify-content:center;
+}
+
+.box{
+    background:#fff;
+    width:90%;
+    max-width:400px;
+    padding:15px;
+    border-radius:12px;
+}
+
+.item{
+    display:flex;
+    justify-content:space-between;
+    padding:8px 0;
+}
+
+.wa{
+    display:block;
+    margin-top:10px;
+    background:#25D366;
+    color:#fff;
+    padding:10px;
+    text-align:center;
+    border-radius:10px;
+    text-decoration:none;
+}
+
+/* ===================== */
+/* IMAGE ZOOM (ƏLAVƏ) */
+/* ===================== */
+
+.img-modal{
+    position:fixed;
+    inset:0;
+    background:rgba(0,0,0,0.85);
+    display:none;
+    align-items:center;
+    justify-content:center;
+    z-index:9999;
+}
+
+.img-modal img{
+    max-width:90%;
+    max-height:90%;
+    border-radius:10px;
+}
+</style>
+</head>
+
+<body>
+
+<!-- HEADER -->
+<div class="header">
+    <div class="header-image">
+        <img src="img/WhatsApp Image 2026-04-15 at 22.40.59.jpeg">
+    </div>
+</div>
+
+<!-- SEARCH -->
+<div class="search">
+    <input type="text" placeholder="Məhsul axtar...">
+</div>
+
+<!-- məhsullar -->
+<div class="products">
+
+    <div class="product">
+        <img src="img/p1.jpg" onclick="openImg(this.src)">
+        <div>
+            <h4>Sədəf Nərd</h4>
+            <div class="price">60 ₼</div>
+
+            <div class="about">Məhsul haqqında: Sədəf ağacından premium əl işidir.</div>
+
+            <div class="qty">
+                <button onclick="minus(this)">-</button>
+                <span>1</span>
+                <button onclick="plus(this)">+</button>
+            </div>
+
+            <button class="add" onclick="add('Sədəf Nərd',60,this)">Səbətə əlavə et</button>
+        </div>
+    </div>
+<!-- məhsullar -->
+<!-- məhsullar -->
+    <div class="product">
+        <img src="img/p2.jpg" onclick="openImg(this.src)">
+        <div>
+            <h4>Qoz Nərd</h4>
+            <div class="price">90 ₼</div>
+
+            <div class="about">Məhsul haqqında: Təbii qoz ağacından hazırlanıb.</div>
+
+            <div class="qty">
+                <button onclick="minus(this)">-</button>
+                <span>1</span>
+                <button onclick="plus(this)">+</button>
+            </div>
+
+            <button class="add" onclick="add('Qoz Nərd',90,this)">Səbətə əlavə et</button>
+        </div>
+    </div>
+<!-- məhsullar -->
+<!-- məhsullar -->
+
+    <div class="product">
+        <img src="img/p3.jpg" onclick="openImg(this.src)">
+        <div>
+            <h4>3D Nərd</h4>
+            <div class="price">120 ₼</div>
+
+            <div class="about">Məhsul haqqında: 3D dizaynlı modern nərd modelidir.</div>
+
+            <div class="qty">
+                <button onclick="minus(this)">-</button>
+                <span>1</span>
+                <button onclick="plus(this)">+</button>
+            </div>
+
+            <button class="add" onclick="add('3D Nərd',120,this)">Səbətə əlavə et</button>
+        </div>
+    </div>
+
+</div>
+<!-- məhsullar -->
+
+<!-- CART -->
+<div class="cart" onclick="openCart()">
+🛒 <span id="count">0</span>
+</div>
+
+<!-- MODAL -->
+<div class="modal" id="modal">
+    <div class="box">
+        <h3>Səbət</h3>
+        <div id="list"></div>
+        <h3 id="total"></h3>
+
+        <a id="wa" class="wa" target="_blank">WhatsApp sifariş</a>
+        <button onclick="closeCart()">Bağla</button>
+    </div>
+</div>
+
+<!-- IMAGE MODAL -->
+<div class="img-modal" id="imgModal" onclick="closeImg()">
+    <img id="bigImg">
+</div>
+
+<script>
+let cart=[];
+
+function plus(btn){
+    let s=btn.parentElement.querySelector("span");
+    s.innerText++;
+}
+
+function minus(btn){
+    let s=btn.parentElement.querySelector("span");
+    if(s.innerText>1) s.innerText--;
+}
+
+function add(name,price,btn){
+    let qty=btn.parentElement.querySelector("span").innerText;
+    cart.push({name,price,qty});
+    document.getElementById("count").innerText=cart.length;
+}
+
+function openCart(){
+    let list=document.getElementById("list");
+    let total=0;
+    list.innerHTML="";
+
+    cart.forEach(i=>{
+        let sum=i.price*i.qty;
+        total+=sum;
+
+        list.innerHTML+=`
+        <div class="item">
+            <span>${i.name} x${i.qty}</span>
+            <span>${sum}₼</span>
+        </div>`;
+    });
+
+    document.getElementById("total").innerText="Cəmi: "+total+"₼";
+
+    let text="Sifariş:%0A";
+    cart.forEach(i=>{
+        text+=`${i.name} x${i.qty}%0A`;
+    });
+
+    document.getElementById("wa").href=
+    "https://wa.me/994501234567?text="+text;
+
+    document.getElementById("modal").style.display="flex";
+}
+
+function closeCart(){
+    document.getElementById("modal").style.display="none";
+}
+
+/* IMAGE ZOOM */
+function openImg(src){
+    document.getElementById("imgModal").style.display="flex";
+    document.getElementById("bigImg").src=src;
+}
+
+function closeImg(){
+    document.getElementById("imgModal").style.display="none";
+}
+</script>
+
+</body>
+</html>bu kodda hecneyi ve hecneyi deyismeden sadece ve sadece en ust hissede olan sekil yerine dizayn ver 
