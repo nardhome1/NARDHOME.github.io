@@ -1,0 +1,254 @@
+
+
+<!DOCTYPE html>
+<html lang="az">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>nerd_home</title>
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+
+<style>
+*{
+    box-sizing:border-box;
+    margin:0;
+    padding:0;
+    font-family:Arial,sans-serif;
+}
+
+/* BODY */
+body{
+    transition:.4s;
+    position:relative;
+    overflow-x:hidden;
+}
+
+/* BACKGROUND */
+body::before{
+    content:"";
+    position:fixed;
+    inset:0;
+    background:url("img/WhatsApp Image 2026-04-12 at 19.58.20.jpeg") center/cover no-repeat;
+    z-index:-2;
+}
+
+/* DARK OVERLAY */
+body::after{
+    content:"";
+    position:fixed;
+    inset:0;
+    background:rgba(0,0,0,0);
+    transition:.4s;
+    z-index:-1;
+}
+
+body.dark::after{
+    background:rgba(0,0,0,0.55);
+}
+
+/* HEADER */
+.header{
+    height:150px;
+    position:relative;
+    border-bottom-left-radius:60% 35px;
+    border-bottom-right-radius:70% 35px;
+    overflow:hidden;
+}
+
+/* HEADER IMAGE */
+.header-image{
+    position:absolute;
+    inset:0;
+    width:100%;
+    height:100%;
+    z-index:1;
+}
+
+.header-image img{
+    width:100%;
+    height:100%;
+    object-fit:cover;
+}
+
+/* MOVING LIGHT */
+.header::before{
+    content:"";
+    position:absolute;
+    top:0;
+    left:-60%;
+    width:60%;
+    height:100%;
+    background:linear-gradient(
+        120deg,
+        transparent,
+        rgba(255,255,255,0.4),
+        rgba(255,215,0,0.9),
+        rgba(255,255,255,0.4),
+        transparent
+    );
+    filter:blur(6px);
+    transform:skewX(-20deg);
+    animation:scan 2.8s infinite;
+    z-index:2;
+}
+
+@keyframes scan{
+    0%{left:-60%;}
+    50%{left:110%;}
+    100%{left:-60%;}
+}
+
+/* THEME */
+.theme-toggle{
+    position:absolute;
+    top:15px;
+    left:15px;
+    width:42px;
+    height:42px;
+    border-radius:50%;
+    background:rgba(0,0,0,0.25);
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    cursor:pointer;
+    z-index:5;
+}
+
+.theme-toggle i{
+    position:absolute;
+    color:#fff;
+    font-size:18px;
+}
+
+#sun{display:none;}
+body.light #sun{display:block;}
+body.light #moon{display:none;}
+body.dark #moon{display:block;}
+body.dark #sun{display:none;}
+
+/* FLAG */
+.lang-btn{
+    position:absolute;
+    top:15px;
+    right:15px;
+    width:42px;
+    height:42px;
+    border-radius:50%;
+    overflow:hidden;
+    border:2px solid #fff;
+    z-index:5;
+}
+
+.lang-btn img{
+    width:100%;
+    height:100%;
+    object-fit:cover;
+}
+
+/* CONTENT */
+.content{
+    text-align:center;
+    padding:15px;
+    margin-top:40px;
+}
+
+/* MENU */
+.menu-card{
+    max-width:360px;
+    margin:20px auto;
+    padding:18px;
+    border-radius:12px;
+    display:flex;
+    justify-content:space-between;
+    font-weight:bold;
+    cursor:pointer;
+    animation:pulse 1.5s infinite;
+    background:#ffcc00;
+    color:#000;
+}
+
+@keyframes pulse{
+    0%{transform:scale(1)}
+    50%{transform:scale(1.05)}
+    100%{transform:scale(1)}
+}
+
+/* FOOTER */
+.footer{
+    text-align:center;
+    margin-top:30px;
+}
+
+.social-btn{
+    font-size:28px;
+    margin:0 10px;
+    color:#ffd700;
+}
+</style>
+</head>
+
+<body class="light">
+
+<div class="header">
+
+    <div class="header-image">
+        <img src="img/WhatsApp Image 2026-04-15 at 22.40.59.jpeg">
+    </div>
+
+    <div class="theme-toggle" id="toggle">
+        <i class="fas fa-moon" id="moon"></i>
+        <i class="fas fa-sun" id="sun"></i>
+    </div>
+
+    <div class="lang-btn">
+        <img src="img/azerbaycan.jpg">
+    </div>
+
+</div>
+
+<div class="content">
+
+<a href="index(3).html" style="text-decoration:none;">
+    <div class="menu-card">
+        🎲 Nərdlər ›
+    </div>
+</a>
+
+<a href="index(12).html" style="text-decoration:none;">
+    <div class="menu-card">
+        ♟️ Şahmatlar ›
+    </div>
+</a>
+
+<a href="index(19).html" style="text-decoration:none;">
+    <div class="menu-card">
+        🁢 Dominolar ›
+    </div>
+</a>
+
+<a href="#" style="text-decoration:none;">
+    <div class="menu-card">
+        📿 Təsbehlər ›
+    </div>
+</a>
+
+</div>
+
+<div class="footer">
+    <a href="https://www.instagram.com/nard.home/"><i class="fab fa-instagram social-btn"></i></a>
+    <a href="https://www.tiktok.com/@nard_home"><i class="fab fa-tiktok social-btn"></i></a>
+    <a href="#"><i class="fab fa-whatsapp social-btn"></i></a>
+</div>
+
+<script>
+const toggle=document.getElementById("toggle");
+
+toggle.onclick=()=>{
+    document.body.classList.toggle("dark");
+    document.body.classList.toggle("light");
+};
+</script>
+
+</body>
+</html>  
